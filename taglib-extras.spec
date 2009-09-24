@@ -1,15 +1,15 @@
+# TODO: bcond with kde itegration
 Summary:	A tag library extra support for MP4 and WMA files
 Summary(pl.UTF-8):	Dodatek do biblioteka tag dla plików MP4 i WMA
 Name:		taglib-extras
-Version:	0.1
+Version:	0.1.7
 Release:	1
 License:	GPL
 Group:		X11/Libraries
-Source0:	http://www.jefferai.com/taglib-extras/%{name}-%{version}.tar.gz
-# Source0-md5:	c6d32e4f203768a2e4b5a83c5285f0a7
+Source0:	http://www.kollide.net/~jefferai/%{name}-%{version}.tar.gz
+# Source0-md5:	09bf9c89d953a238b55ac74bf9db0be3
 URL:		http://ktown.kde.org/~wheeler/taglib.html
-BuildRequires:	autoconf >= 2.52
-BuildRequires:	automake >= 1.6
+BuildRequires:	cmake >= 2.6.2
 BuildRequires:	libstdc++-devel
 BuildRequires:	perl-base
 BuildRequires:	pkgconfig
@@ -35,24 +35,28 @@ Extras header files for tag library.
 Pliki nagłówkowe dodatków biblioteki tag.
 
 %prep
-%setup -q -n %{name}
+%setup -q
 
 %build
+install -d build
+cd build
+
 %cmake \
 	-DCMAKE_INSTALL_PREFIX=%{_prefix} \
 	-DLIB_INSTALL_DIR=%{_libdir} \
 	-DCMAKE_BUILD_TYPE=%{!?debug:Release}%{?debug:Debug} \
+	-DWITH_KDE=ON \
 %if "%{_lib}" == "lib64"
 	-DLIB_SUFFIX=64 \
 %endif
-	.
+	..
 
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
