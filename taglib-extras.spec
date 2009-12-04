@@ -13,6 +13,7 @@ BuildRequires:	cmake >= 2.6.2
 BuildRequires:	libstdc++-devel
 BuildRequires:	perl-base
 BuildRequires:	pkgconfig
+BuildRequires:	taglib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
