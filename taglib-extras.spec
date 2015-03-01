@@ -3,7 +3,7 @@ Summary:	A tag library extra support for MP4 and WMA files
 Summary(pl.UTF-8):	Dodatek do biblioteka tag dla plików MP4 i WMA
 Name:		taglib-extras
 Version:	1.0.1
-Release:	1
+Release:	2
 License:	GPL
 Group:		X11/Libraries
 Source0:	http://www.kollide.net/~jefferai/%{name}-%{version}.tar.gz
