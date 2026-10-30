@@ -3,11 +3,12 @@ Summary:	A tag library extra support for MP4 and WMA files
 Summary(pl.UTF-8):	Dodatek do biblioteka tag dla plików MP4 i WMA
 Name:		taglib-extras
 Version:	1.0.1
-Release:	3
+Release:	4
 License:	GPL
 Group:		X11/Libraries
 Source0:	http://www.kollide.net/~jefferai/%{name}-%{version}.tar.gz
 # Source0-md5:	e973ca609b18e2c03c147ff9fd9e6eb8
+Patch0:		taglib-2.0.patch
 URL:		http://ktown.kde.org/~wheeler/taglib.html
 BuildRequires:	cmake >= 2.6.2
 BuildRequires:	libstdc++-devel
@@ -37,6 +38,7 @@ Pliki nagłówkowe dodatków biblioteki tag.
 
 %prep
 %setup -q
+%patch -P0 -p1
 
 %build
 install -d build
