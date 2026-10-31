@@ -1,34 +1,39 @@
-# TODO: bcond with kde itegration
 Summary:	A tag library extra support for MP4 and WMA files
-Summary(pl.UTF-8):	Dodatek do biblioteka tag dla plików MP4 i WMA
+Summary(pl.UTF-8):	Dodatki do biblioteki tag dla plików MP4 i WMA
 Name:		taglib-extras
 Version:	1.0.1
 Release:	4
-License:	GPL
-Group:		X11/Libraries
-Source0:	http://www.kollide.net/~jefferai/%{name}-%{version}.tar.gz
+# helpers LGPL v2.1+, audible LGPL v2.1+, rmff GPL v2+ - so GPL as a whole
+License:	GPL v2+
+Group:		Libraries
+# originally from <http://www.kollide.net/~jefferai/>, no longer exists; now available on some distfiles
+Source0:	https://mirrors.mit.edu/macports/distfiles/taglib-extras/%{name}-%{version}.tar.gz
 # Source0-md5:	e973ca609b18e2c03c147ff9fd9e6eb8
 Patch0:		taglib-2.0.patch
-URL:		http://ktown.kde.org/~wheeler/taglib.html
+URL:		https://taglib.org/
 BuildRequires:	cmake >= 2.6.2
 BuildRequires:	libstdc++-devel
 BuildRequires:	perl-base
 BuildRequires:	pkgconfig
-BuildRequires:	taglib-devel
+BuildRequires:	rpmbuild(macros) >= 1.605
+BuildRequires:	taglib-devel >= 2.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-A tag library extras
+Unofficial TagLib file type plugins formerly maintained by the Amarok
+project.
 
 %description -l pl.UTF-8
-Dodatek dla biblioteki tag
+Nieoficjalne wtyczki typów plików TagLib dawniej utrzymywane przez
+projekt Amarok.
 
 %package devel
 Summary:	libtag-extras - header files
 Summary(pl.UTF-8):	libtag-extras - pliki nagłówkowe
-Group:		X11/Development/Libraries
-Requires:	%{name} = %{version}-%{release}
-Requires:	libstdc++-devel
+Group:		Development/Libraries
+Requires:	%{name}%{?_isa} = %{version}-%{release}
+Requires:	libstdc++-devel%{?_isa}
+Requires:	taglib-devel%{?_isa} >= 2.0
 
 %description devel
 Extras header files for tag library.
@@ -43,16 +48,8 @@ Pliki nagłówkowe dodatków biblioteki tag.
 %build
 install -d build
 cd build
-
-%cmake \
-	-DCMAKE_INSTALL_PREFIX=%{_prefix} \
-	-DLIB_INSTALL_DIR=%{_libdir} \
-	-DCMAKE_BUILD_TYPE=%{!?debug:Release}%{?debug:Debug} \
-	-DWITH_KDE=ON \
-%if "%{_lib}" == "lib64"
-	-DLIB_SUFFIX=64 \
-%endif
-	..
+%cmake .. \
+	-DLIB_INSTALL_DIR=%{_libdir}
 
 %{__make}
 
@@ -70,8 +67,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libtag-extras.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libtag-extras.so.?
+%{_libdir}/libtag-extras.so.*.*.*
+%ghost %{_libdir}/libtag-extras.so.1
 
 %files devel
 %defattr(644,root,root,755)
